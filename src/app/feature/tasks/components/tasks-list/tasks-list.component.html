@@ -1,0 +1,6 @@
+<mat-list class="task-list mat-elevation-z6" role="list">
+  <mat-list-item class="task-list__item" role="listitem" *ngFor="let task of tasks">
+    <app-task-item [task]="task">
+    </app-task-item>
+  </mat-list-item>
+</mat-list>
