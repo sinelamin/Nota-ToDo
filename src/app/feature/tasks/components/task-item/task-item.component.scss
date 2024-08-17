@@ -1,0 +1,27 @@
+:host {
+  .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 480px;
+  }
+
+  .complete {
+    text-decoration: line-through;
+  }
+
+  .task-item__checkbox {
+    margin-right: 10px;
+  }
+
+  ::ng-deep .mat-checkbox .mat-checkbox-background {
+    border-radius: 50%;
+    border: 1px solid #000;
+  }
+
+  .task-item__name {
+    overflow: auto;
+    margin: 0;
+    width: 80%;
+  }
+}

@@ -1,4 +1,4 @@
-export interface Task {
+export interface TaskInterface {
   taskname: string;
   status: boolean;
 }

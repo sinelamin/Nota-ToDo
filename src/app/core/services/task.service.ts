@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TaskInterface } from '../models/TaskInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class TaskService {
 
   constructor() { }
 
-  tasks = [
+  tasks: TaskInterface[] = [
     {
       taskname: 'Complete project report',
       status: false
@@ -16,22 +17,5 @@ export class TaskService {
       taskname: 'Prepare presentation slides',
       status: false
     },
-    {
-      taskname: 'Update website content',
-      status: true
-    },
-    {
-      taskname: 'Organize team meeting',
-      status: false
-    },
-    {
-      taskname: 'Review budget proposal',
-      status: true
-    },
-    {
-      taskname: 'Submit time sheets',
-      status: false
-    }
   ];
-
 }

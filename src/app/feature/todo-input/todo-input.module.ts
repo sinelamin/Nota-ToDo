@@ -5,11 +5,6 @@ import { TodoInputComponent } from './todo-input.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatIconModule } from '@angular/material/icon';
-// import { MatDividerModule } from '@angular/material/divider';
-
-
 
 @NgModule({
   declarations: [
@@ -19,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    // MatButtonModule,
   ],
   exports: [
     TodoInputComponent,

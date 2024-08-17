@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TaskService } from 'src/app/core/services/task.service';
-import { Task } from 'src/app/core/models/task';
+import { TaskInterface } from 'src/app/core/models/TaskInterface';
 
 @Component({
   selector: 'app-tasks-list',
@@ -12,7 +12,7 @@ export class TasksListComponent implements OnInit {
 
   constructor(private TaskService: TaskService) { }
 
-  tasks: Task[] = [];
+  tasks: TaskInterface[] = [];
 
   ngOnInit(): void {
     this.tasks = this.TaskService.tasks;

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from 'src/app/core/models/task';
+
+
+import { TaskInterface } from 'src/app/core/models/TaskInterface';
+import { TaskService } from 'src/app/core/services/task.service';
 
 @Component({
   selector: 'app-task-item',
@@ -8,11 +11,12 @@ import { Task } from 'src/app/core/models/task';
 })
 export class TaskItemComponent implements OnInit {
 
-  @Input() task!: Task;
+  @Input() task!: TaskInterface;
 
-  constructor() { }
+  constructor(private TaskService: TaskService) { }
 
   ngOnInit(): void {
   }
 
+  checked: boolean = false;
 }
