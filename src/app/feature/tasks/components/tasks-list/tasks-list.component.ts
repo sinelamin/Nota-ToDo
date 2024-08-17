@@ -12,11 +12,18 @@ export class TasksListComponent implements OnInit {
 
   constructor(private TaskService: TaskService) { }
 
+  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   tasks: TaskInterface[] = [];
 
+  taskCounter!: number;
+
   ngOnInit(): void {
-    this.tasks = this.TaskService.tasks;
+    this.TaskService.tasks$.subscribe((tasks => {
+      this.tasks = tasks;
+    }));
+
+    this.TaskService.getTasks().subscribe();
+
     console.log(this.tasks);
   }
-
 }

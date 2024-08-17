@@ -1,7 +1,7 @@
 <div class="task-item"  [ngClass]="{complete: checked}">
   <mat-checkbox class="task-item__checkbox" [(ngModel)]="checked"></mat-checkbox>
   <p class="task-item__name">{{ task.taskname }}</p>
-  <button mat-icon-button class="task-item__btn">
+  <button mat-icon-button class="task-item__btn" (click)="deleteTask(task)">
     <mat-icon>close</mat-icon>
   </button>
 </div>

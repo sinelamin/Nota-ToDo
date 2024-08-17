@@ -1,8 +1,10 @@
-<form class="todo-form">
+<form class="todo-form"  [formGroup]="taskInput">
   <div class="todo-field">
     <input
           class="todo-input"
           placeholder="What needs to be done?"
+          formControlName="taskName"
+          (keyup.enter)="addTask()"
     >
   </div>
 </form>

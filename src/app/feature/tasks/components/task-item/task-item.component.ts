@@ -19,4 +19,9 @@ export class TaskItemComponent implements OnInit {
   }
 
   checked: boolean = false;
+
+  deleteTask(task: TaskInterface) {
+    this.TaskService.deleteTask(task);
+  }
+
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { TodoInputComponent } from './todo-input.component';
 
@@ -12,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
   ],
