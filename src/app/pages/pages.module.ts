@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MainComponent } from './main/main.component';
+import { TodoInputModule } from '../feature/todo-input/todo-input.module';
+import { TasksModule } from '../feature/tasks/tasks.module';
+
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MainComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    TodoInputModule,
+    TasksModule,
+  ],
+  exports: [
+    MainComponent
   ]
 })
 export class PagesModule { }
