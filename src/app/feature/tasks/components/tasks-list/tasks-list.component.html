@@ -2,10 +2,16 @@
 </div>
 <ng-template #taskList>
   <mat-list class="tasks-list mat-elevation-z6" role="list">
-    <mat-list-item class="tasks-list__item" role="listitem" *ngFor="let task of tasks">
-      <app-task-item [task]="task">
-      </app-task-item>
+    <mat-list-item class="tasks-list__item" role="listitem" *ngFor="let task of filteredTasks">
+      <app-task-item [task]="task"></app-task-item>
     </mat-list-item>
-    <!-- <div class="tasks-list__counter">{{taskCounter}} tasks left</div> -->
+    <div class="tasks-footer">
+      <div class="tasks-list__counter">{{taskCounter}} tasks left</div>
+      <mat-button-toggle-group class="toggle-group" [(ngModel)]="taskStatus" name="taskStatus" (change)="filterTasks($event.value)">
+        <mat-button-toggle class="tasks-list__toggle" value="all">All</mat-button-toggle>
+        <mat-button-toggle class="tasks-list__toggle" value="active">Active</mat-button-toggle>
+        <mat-button-toggle class="tasks-list__toggle" value="completed">Completed</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
   </mat-list>
 </ng-template>

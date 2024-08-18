@@ -16,4 +16,41 @@
     align-items: center;
     font-size: 18px;
   }
+
+  .tasks-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    height: 60px;
+  }
+
+  .toggle-group {
+    display: flex;
+    margin-right: 10px;
+  }
+
+  .tasks-list__toggle {
+    display: flex;
+    padding: 5px 10px;
+    height: 40px;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+
+  // ::ng-deep .mat-button-toggle-button {
+  // }
+
+  ::ng-deep .mat-button-toggle-appearance-standard {
+    background-color: transparent;
+    transition: 'background-color .4s'; 
+  }
+
+  ::ng-deep .mat-button-toggle-label-content {
+    height: 40px;
+  }
+
+  ::ng-deep .mat-button-toggle-checked {
+    background-color: #68f0ad;
+  }
 }

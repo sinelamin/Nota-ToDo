@@ -10,11 +10,8 @@ export class TaskService {
   constructor() { }
 
   private tasksSubject = new BehaviorSubject<TaskInterface[]>([]);
-  private tasksCounterSubject = new BehaviorSubject<number>(0);
 
   tasks$ = this.tasksSubject.asObservable();
-
-  taskCounter$ = this.tasksCounterSubject.asObservable();
 
   // tasks = [
   //   {
@@ -26,10 +23,6 @@ export class TaskService {
   //     status: false
   //   },
   // ];
-
-  getTasks() {
-    return this.tasks$;
-  }
 
   addTask(task: TaskInterface) {
     const currentTasks = this.tasksSubject.getValue();
@@ -46,7 +39,15 @@ export class TaskService {
     console.log(updateTasks);
   }
 
+  changeStatusTask(task: TaskInterface): void {
+    const currentTasks = this.tasksSubject.getValue();
 
-  // tasksCounter(): void {
-  // }
+    currentTasks.forEach(item => {
+      if (item === task) {
+        item.status = !item.status;
+      }
+    });
+
+    this.tasksSubject.next(currentTasks);
+  }
 }
