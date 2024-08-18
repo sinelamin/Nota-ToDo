@@ -18,5 +18,11 @@ export class TaskItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  checked: boolean = false;
+  deleteTask(task: TaskInterface) {
+    this.TaskService.deleteTask(task);
+  }
+
+  changeStatusTask(task: TaskInterface) {
+    this.TaskService.changeStatusTask(task);
+  }
 }
