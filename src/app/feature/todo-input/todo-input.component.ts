@@ -27,11 +27,14 @@ export class TodoInputComponent implements OnInit {
 
   addTask() {
     const taskName = this.taskInput.get('taskName')!.value!;
-    const newTask: TaskInterface = new TaskModel(taskName, false);
 
-    this.TaskService.addTask(newTask);
+    if (taskName) {
+      const newTask: TaskInterface = new TaskModel(taskName, false);
 
-    this.taskInput.reset();
+      this.TaskService.addTask(newTask);
+
+      this.taskInput.reset();
+    }
   }
 
 }

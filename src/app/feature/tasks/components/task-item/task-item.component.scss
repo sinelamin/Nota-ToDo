@@ -24,4 +24,12 @@
     margin: 0;
     width: 80%;
   }
+
+  .task-item__btn {
+    opacity: 0;
+  }
+
+  .task-item:hover .task-item__btn {
+    opacity: 1;
+  }
 }
