@@ -19,12 +19,12 @@ export class TaskItemComponent implements OnInit {
   @ViewChild('inputElement') inputElement!: ElementRef;
 
   isTaskEdit: boolean = false;
-  taskChangeInput!: FormGroup;
+  inputChangeTaskName!: FormGroup;
 
   constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.taskChangeInput = new FormGroup({
+    this.inputChangeTaskName = new FormGroup({
       newTaskName: new FormControl(`${this.task.taskname}`),
     });
   }
@@ -44,7 +44,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   changeNameTask(task: Task) {
-    const newTaskName = this.taskChangeInput.get('newTaskName')!.value!;
+    const newTaskName = this.inputChangeTaskName.get('newTaskName')!.value!;
 
     if (newTaskName) {
       this.taskService.changeNameTask(task, newTaskName);
