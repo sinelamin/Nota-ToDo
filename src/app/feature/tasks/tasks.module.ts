@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from 'src/app/shared/angular-material.module';
 
@@ -16,6 +16,7 @@ import { TaskItemComponent } from './components/task-item/task-item.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     NgClass,
     AngularMaterialModule

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TaskService } from 'src/app/core/services/task.service';
-import { TaskInterface } from 'src/app/core/models/TaskInterface';
-import { TaskModel } from 'src/app/core/models/taskModel';
+import { TaskService } from 'src/app/core/task.service';
+import { Task } from 'src/app/core/task';
 
 import {
   FormControl,
@@ -16,7 +15,7 @@ import {
 })
 export class TodoInputComponent implements OnInit {
 
-  constructor(private TaskService: TaskService,) { }
+  constructor(private taskService: TaskService,) { }
 
   ngOnInit(): void {
   }
@@ -29,12 +28,12 @@ export class TodoInputComponent implements OnInit {
     const taskName = this.taskInput.get('taskName')!.value!;
 
     if (taskName) {
-      const newTask: TaskInterface = new TaskModel(taskName, false);
+      const id = Date.now();
+      const newTask: Task = {id: id, taskname: taskName, complited: false};
 
-      this.TaskService.addTask(newTask);
+      this.taskService.addTask(newTask);
 
       this.taskInput.reset();
     }
   }
-
 }

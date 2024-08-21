@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TaskService } from 'src/app/core/services/task.service';
-import { TaskInterface } from 'src/app/core/models/TaskInterface';
+import { TaskService } from 'src/app/core/task.service';
+import { Task } from 'src/app/core/task';
 
 @Component({
   selector: 'app-tasks-list',
@@ -10,16 +10,16 @@ import { TaskInterface } from 'src/app/core/models/TaskInterface';
 })
 export class TasksListComponent implements OnInit {
 
-  constructor(private TaskService: TaskService) { }
+  constructor(private taskService: TaskService) { }
 
-  tasks: TaskInterface[] = [];
+  tasks: Task[] = [];
   taskCounter: number = 0;
 
-  filteredTasks: TaskInterface[] = [];
+  filteredTasks: Task[] = [];
   taskStatus: string = '';
 
   ngOnInit(): void {
-    this.TaskService.tasks$.subscribe((tasks => {
+    this.taskService.tasks$.subscribe((tasks => {
       this.tasks = tasks;
       this.filterTasks(this.taskStatus);
 
@@ -31,8 +31,8 @@ export class TasksListComponent implements OnInit {
     console.log(this.taskStatus);
   }
 
-  tasksCounter(tasks: TaskInterface[]): number {
-    const notCompleteTasks = tasks.filter(item => !item.status);
+  tasksCounter(tasks: Task[]): number {
+    const notCompleteTasks = tasks.filter(item => !item.complited);
     const notCompleteTasksLength = notCompleteTasks.length;
 
     return +notCompleteTasksLength;
@@ -44,11 +44,11 @@ export class TasksListComponent implements OnInit {
       }
   
       if (condition === 'active') {
-        this.filteredTasks = this.tasks.filter(item => !item.status);
+        this.filteredTasks = this.tasks.filter(item => !item.complited);
       }
   
       if (condition === 'completed') {
-        this.filteredTasks = this.tasks.filter(item => item.status);
+        this.filteredTasks = this.tasks.filter(item => item.complited);
       }
     }
 }
