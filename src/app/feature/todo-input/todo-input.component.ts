@@ -17,14 +17,19 @@ export class TodoInputComponent implements OnInit {
 
   constructor(private taskService: TaskService,) { }
 
+  tasks: Task[] = [];
+
   ngOnInit(): void {
+    this.taskService.tasks$.subscribe((tasks => {
+      this.tasks = tasks;
+    }));
   }
 
   taskInput = new FormGroup({
     taskName: new FormControl(''),
   });
 
-  addTask() {
+  addTask(): void {
     const taskName = this.taskInput.get('taskName')!.value!;
 
     if (taskName) {
@@ -35,5 +40,9 @@ export class TodoInputComponent implements OnInit {
 
       this.taskInput.reset();
     }
+  }
+
+  changeStatusAllTasks(): void {
+    this.taskService.changeStatusAllTasks();
   }
 }

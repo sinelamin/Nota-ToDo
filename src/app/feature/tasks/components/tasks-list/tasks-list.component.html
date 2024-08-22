@@ -1,4 +1,4 @@
-<div class="" *ngIf="!filteredTasks.length, else taskList">
+<div class="" *ngIf="!tasks.length, else taskList">
 </div>
 <ng-template #taskList>
   <mat-list class="tasks-list mat-elevation-z6" role="list">
@@ -7,11 +7,22 @@
     </mat-list-item>
     <div class="tasks-footer">
       <div class="tasks-list__counter">{{ taskCounter }}</div>
-      <mat-button-toggle-group class="toggle-group" [(ngModel)]="taskStatus" name="taskStatus" (change)="filterTasks($event.value)">
-        <mat-button-toggle class="tasks-list__toggle" value="all">All</mat-button-toggle>
-        <mat-button-toggle class="tasks-list__toggle" value="active">Active</mat-button-toggle>
-        <mat-button-toggle class="tasks-list__toggle" value="completed">Completed</mat-button-toggle>
-      </mat-button-toggle-group>
+      <div class="tasks-btns">
+        <mat-button-toggle-group
+        class="toggle-group"
+        [(ngModel)]="taskStatus"
+        name="taskStatus"
+        (change)="filterTasks($event.value)"
+        >
+          <mat-button-toggle class="tasks-list__toggle" value="all">All</mat-button-toggle>
+          <mat-button-toggle class="tasks-list__toggle" value="active">Active</mat-button-toggle>
+          <mat-button-toggle class="tasks-list__toggle" value="completed">Completed</mat-button-toggle>
+        </mat-button-toggle-group>
+        <button class="tasks-list__remove"
+        [ngClass]="{btnRemoveShow: false}">
+          Clear Completed
+        </button>
+      </div>
     </div>
   </mat-list>
 </ng-template>

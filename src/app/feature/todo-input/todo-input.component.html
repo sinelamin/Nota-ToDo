@@ -1,4 +1,7 @@
 <form class="todo-form"  [formGroup]="taskInput">
+  <button class="todo-form__btn" type="button" [ngClass]="{btnShow: tasks.length}" (click)="changeStatusAllTasks()">
+    <mat-icon>expand_more</mat-icon>
+  </button>
   <div class="todo-field">
     <input
           class="todo-input"

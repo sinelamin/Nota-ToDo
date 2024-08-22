@@ -12,6 +12,7 @@ export class TaskService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
 
   tasks$ = this.tasksSubject.asObservable();
+  // hasCompletedTasks: boolean = false;
 
   // tasks = [
   //   {
@@ -46,6 +47,16 @@ export class TaskService {
       if (item.id === task.id) {
         item.complited = !item.complited;
       }
+    });
+
+    this.tasksSubject.next(currentTasks);
+  }
+
+  changeStatusAllTasks(): void {
+    const currentTasks = this.tasksSubject.getValue();
+
+    currentTasks.forEach(item => {
+      item.complited = !item.complited;
     });
 
     this.tasksSubject.next(currentTasks);
