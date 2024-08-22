@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef  } from '@angular/core';
 
 import {
   FormControl,
@@ -15,35 +15,45 @@ import { TaskService } from 'src/app/core//task.service';
 })
 export class TaskItemComponent implements OnInit {
 
-  @Input() task!: Task;
-  @ViewChild('inputElement') inputElement!: ElementRef;
+  @Input() task: Task | null = null;
+  @ViewChild('inputElement') inputElement: ElementRef | undefined;
 
   isTaskEdit: boolean = false;
-  inputChangeTaskName!: FormGroup;
+  inputChangeTaskName: FormGroup = new FormGroup({});
 
   constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
+    if (!this.task) {
+      return console.error('Task data is undefined or null');
+    }
+
     this.inputChangeTaskName = new FormGroup({
-      newTaskName: new FormControl(`${this.task.taskname}`),
+      newTaskName: new FormControl(this.task.taskname),
     });
   }
 
-  deleteTask(task: Task) {
+  deleteTask(task: Task | null) {
+    if (!task) {return console.error('Task data is undefined or null')}
+
     this.taskService.deleteTask(task);
   }
-
+  
   editTask() {
     this.isTaskEdit = !this.isTaskEdit;
 
     if (this.isTaskEdit) {
       setTimeout(() => {
+        if (!this.inputElement) {return console.error('inputElement not found')};
+
         this.inputElement.nativeElement.focus();
       }, 0);
     }
   }
 
-  changeNameTask(task: Task) {
+  changeNameTask(task: Task | null) {
+    if (!task) {return console.error('Task data is undefined or null')}
+
     const newTaskName = this.inputChangeTaskName.get('newTaskName')!.value!;
 
     if (newTaskName) {
@@ -54,7 +64,9 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
-  changeStatusTask(task: Task) {
+  changeStatusTask(task: Task | null) {
+    if (!task) {return console.error('Task data is undefined or null')}
+
     this.taskService.changeStatusTask(task);
   }
 }
