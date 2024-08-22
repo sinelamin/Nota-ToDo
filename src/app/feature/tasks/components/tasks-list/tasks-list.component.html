@@ -6,7 +6,7 @@
       <app-task-item [task]="task"></app-task-item>
     </mat-list-item>
     <div class="tasks-footer">
-      <div class="tasks-list__counter">{{ taskCounter }} tasks left</div>
+      <div class="tasks-list__counter">{{ taskCounter }}</div>
       <mat-button-toggle-group class="toggle-group" [(ngModel)]="taskStatus" name="taskStatus" (change)="filterTasks($event.value)">
         <mat-button-toggle class="tasks-list__toggle" value="all">All</mat-button-toggle>
         <mat-button-toggle class="tasks-list__toggle" value="active">Active</mat-button-toggle>

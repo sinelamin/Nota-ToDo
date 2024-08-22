@@ -13,7 +13,7 @@ export class TasksListComponent implements OnInit {
   constructor(private taskService: TaskService) { }
 
   tasks: Task[] = [];
-  taskCounter: number = 0;
+  taskCounter: string = '';
 
   filteredTasks: Task[] = [];
   taskStatus: string = '';
@@ -31,11 +31,13 @@ export class TasksListComponent implements OnInit {
     console.log(this.taskStatus);
   }
 
-  tasksCounter(tasks: Task[]): number {
+  tasksCounter(tasks: Task[]): string {
     const notCompleteTasks = tasks.filter(item => !item.complited);
     const notCompleteTasksLength = notCompleteTasks.length;
 
-    return +notCompleteTasksLength;
+    if (notCompleteTasksLength <= 1) {return `${notCompleteTasksLength} task left`}
+
+    return `${notCompleteTasksLength} tasks left`;
   }
 
   filterTasks(condition: string): void {
