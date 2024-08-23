@@ -19,7 +19,9 @@
           <mat-button-toggle class="tasks-list__toggle" value="completed">Completed</mat-button-toggle>
         </mat-button-toggle-group>
         <button class="tasks-list__remove"
-        [ngClass]="{btnRemoveShow: false}">
+        [ngClass]="{btnRemoveShow: hasCompletedTasks}"
+        (click)="deleteAllComplitedTasks()"
+        >
           Clear Completed
         </button>
       </div>

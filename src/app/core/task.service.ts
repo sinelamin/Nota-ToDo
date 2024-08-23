@@ -10,8 +10,11 @@ export class TaskService {
   constructor() { }
 
   private tasksSubject = new BehaviorSubject<Task[]>([]);
+  private hasCompletedTasksSubject = new BehaviorSubject<boolean>(false);
 
   tasks$ = this.tasksSubject.asObservable();
+  hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
+
   // hasCompletedTasks: boolean = false;
 
   // tasks = [
@@ -25,19 +28,27 @@ export class TaskService {
   //   },
   // ];
 
-  addTask(task: Task) {
+  addTask(task: Task): void {
     const currentTasks = this.tasksSubject.getValue();
 
     this.tasksSubject.next([...currentTasks, task]);
     console.log(this.tasksSubject.getValue());
   }
 
-  deleteTask(task: Task) {
+  deleteTask(task: Task): void {
     const currentTasks = this.tasksSubject.getValue();
     const updateTasks = currentTasks.filter(item => item.id !== task.id);
 
     this.tasksSubject.next(updateTasks);
     console.log(updateTasks);
+  }
+
+  deleteAllComplitedTasks(): void {
+    const currentTasks = this.tasksSubject.getValue();
+    const updateTasks = currentTasks.filter(item => !item.complited);
+
+    this.tasksSubject.next(updateTasks);
+    this.checkingUnfinishedTasks();
   }
 
   changeStatusTask(task: Task): void {
@@ -50,6 +61,8 @@ export class TaskService {
     });
 
     this.tasksSubject.next(currentTasks);
+  
+    this.checkingUnfinishedTasks();
   }
 
   changeStatusAllTasks(): void {
@@ -60,6 +73,7 @@ export class TaskService {
     });
 
     this.tasksSubject.next(currentTasks);
+    this.checkingUnfinishedTasks();
   }
 
   changeNameTask(task: Task, newTaskName: string): void {
@@ -72,5 +86,15 @@ export class TaskService {
     });
 
     this.tasksSubject.next(currentTasks);
+  }
+
+  checkingUnfinishedTasks(): void {
+    const currentTasks = this.tasksSubject.getValue();
+
+    if (currentTasks.every(item => !item.complited)) {
+      this.hasCompletedTasksSubject.next(false);
+    } else {
+      this.hasCompletedTasksSubject.next(true);
+    }
   }
 }

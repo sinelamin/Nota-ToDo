@@ -17,6 +17,7 @@ export class TasksListComponent implements OnInit {
 
   filteredTasks: Task[] = [];
   taskStatus: string = '';
+  hasCompletedTasks: boolean = false;
 
   ngOnInit(): void {
     this.taskService.tasks$.subscribe((tasks => {
@@ -26,6 +27,10 @@ export class TasksListComponent implements OnInit {
       this.taskCounter = this.tasksCounter(this.tasks) ;
       console.log('обновился список задач!');
     }));
+
+    this.taskService.hasCompletedTasks$.subscribe((hasCompletedTasks => {
+      this.hasCompletedTasks = hasCompletedTasks;
+    }))
 
     console.log(this.tasks);
     console.log(this.taskStatus);
@@ -52,5 +57,9 @@ export class TasksListComponent implements OnInit {
       if (condition === 'completed') {
         this.filteredTasks = this.tasks.filter(item => item.complited);
       }
+    }
+
+    deleteAllComplitedTasks(): void {
+      this.taskService.deleteAllComplitedTasks();
     }
 }
