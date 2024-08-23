@@ -61,16 +61,23 @@ export class TaskService {
     });
 
     this.tasksSubject.next(currentTasks);
-  
+
     this.checkingUnfinishedTasks();
   }
 
   changeStatusAllTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
 
-    currentTasks.forEach(item => {
-      item.complited = !item.complited;
-    });
+    if (currentTasks.every(item => item.complited === true)) {
+      currentTasks.forEach(item => {
+        item.complited = false;
+      });
+    } else {
+            currentTasks.forEach(item => {
+        item.complited = true;
+      });
+    }
+
 
     this.tasksSubject.next(currentTasks);
     this.checkingUnfinishedTasks();
