@@ -15,14 +15,9 @@ import {
 })
 export class TodoInputComponent implements OnInit {
 
-  constructor(private taskService: TaskService,) { }
-
-  tasks: Task[] = [];
+  constructor(public taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.taskService.tasks$.subscribe((tasks => {
-      this.tasks = tasks;
-    }));
   }
 
   taskInput = new FormGroup({
@@ -34,7 +29,7 @@ export class TodoInputComponent implements OnInit {
 
     if (taskName) {
       const id = Date.now();
-      const newTask: Task = {id: id, taskname: taskName, complited: false};
+      const newTask: Task = { id: id, taskname: taskName, complited: false };
 
       this.taskService.addTask(newTask);
 
