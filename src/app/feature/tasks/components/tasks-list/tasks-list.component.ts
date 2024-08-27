@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TaskService } from 'src/app/core/task.service';
 import { Task } from 'src/app/core/task';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-list',
@@ -12,54 +13,51 @@ export class TasksListComponent implements OnInit {
 
   constructor(private taskService: TaskService) { }
 
-  tasks: Task[] = [];
+  tasks$ = this.taskService.tasks$;
   taskCounter: string = '';
 
+  taskCounter2 = this.taskService.tasks$.pipe(
+    map(items => this.getTasksCounter(items))
+  );
+
   filteredTasks: Task[] = [];
+  filteredTasks2 = this.taskService.tasks$.pipe(
+    map(items => this.filterTasks(this.taskStatus, items))
+  );
   taskStatus: string = '';
-  hasCompletedTasks: boolean = false;
+  hasCompletedTasks$ = this.taskService.hasCompletedTasks$;
 
   ngOnInit(): void {
-    this.taskService.tasks$.subscribe((tasks => {
-      this.tasks = tasks;
-      this.filterTasks(this.taskStatus);
-
-      this.taskCounter = this.tasksCounter(this.tasks) ;
-      console.log('обновился список задач!');
-    }));
-
-    this.taskService.hasCompletedTasks$.subscribe((hasCompletedTasks => {
-      this.hasCompletedTasks = hasCompletedTasks;
-    }))
-
-    console.log(this.tasks);
+    // console.log(this.tasks);
     console.log(this.taskStatus);
   }
 
-  tasksCounter(tasks: Task[]): string {
+  setStatus(status: string) {
+    this.taskStatus = status
+  }
+
+  getTasksCounter(tasks: Task[]): string {
     const notCompleteTasks = tasks.filter(item => !item.complited);
     const notCompleteTasksLength = notCompleteTasks.length;
 
-    if (notCompleteTasksLength <= 1) {return `${notCompleteTasksLength} task left`}
+    if (notCompleteTasksLength <= 1) { return `${notCompleteTasksLength} task left` }
 
     return `${notCompleteTasksLength} tasks left`;
   }
 
-  filterTasks(condition: string): void {
-      if (condition === 'all' || condition === '') {
-        this.filteredTasks = this.tasks;
-      }
-  
-      if (condition === 'active') {
-        this.filteredTasks = this.tasks.filter(item => !item.complited);
-      }
-  
-      if (condition === 'completed') {
-        this.filteredTasks = this.tasks.filter(item => item.complited);
-      }
+  filterTasks(condition: string, tasks: Task[]) {
+    if (condition === 'active') {
+      return tasks.filter(item => !item.complited);
     }
 
-    deleteAllComplitedTasks(): void {
-      this.taskService.deleteAllComplitedTasks();
+    if (condition === 'completed') {
+      return tasks.filter(item => item.complited);
     }
+
+    return tasks;
+  }
+
+  deleteAllComplitedTasks(): void {
+    this.taskService.deleteAllComplitedTasks();
+  }
 }

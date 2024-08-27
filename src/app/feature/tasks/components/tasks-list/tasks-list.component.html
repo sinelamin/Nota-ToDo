@@ -1,4 +1,4 @@
-<div class="" *ngIf="!tasks.length, else taskList">
+<div class="" *ngIf="!(tasks$ | async)?.length, else taskList">
 </div>
 <ng-template #taskList>
   <mat-list class="tasks-list mat-elevation-z6" role="list">
@@ -12,14 +12,14 @@
         class="toggle-group"
         [(ngModel)]="taskStatus"
         name="taskStatus"
-        (change)="filterTasks($event.value)"
+        (change)="setStatus($event.value)"
         >
           <mat-button-toggle class="tasks-list__toggle" value="all">All</mat-button-toggle>
           <mat-button-toggle class="tasks-list__toggle" value="active">Active</mat-button-toggle>
           <mat-button-toggle class="tasks-list__toggle" value="completed">Completed</mat-button-toggle>
         </mat-button-toggle-group>
         <button class="tasks-list__remove"
-        [ngClass]="{btnRemoveShow: hasCompletedTasks}"
+        [ngClass]="{btnRemoveShow: hasCompletedTasks$ | async}"
         (click)="deleteAllComplitedTasks()"
         >
           Clear Completed
