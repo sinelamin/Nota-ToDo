@@ -1,0 +1,13 @@
+<form class="todo-form"  [formGroup]="taskInput">
+  <button class="todo-form__btn" type="button" [ngClass]="{btnShow: (taskList$ | async)?.length }" (click)="changeStatusAllTasks()">
+    <mat-icon>expand_more</mat-icon>
+  </button>
+  <div class="todo-field">
+    <input
+          class="todo-input"
+          placeholder="What needs to be done?"
+          formControlName="taskName"
+          (keyup.enter)="addTask()"
+    >
+  </div>
+</form>

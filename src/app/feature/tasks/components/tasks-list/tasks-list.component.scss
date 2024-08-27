@@ -1,0 +1,75 @@
+:host {
+  .tasks-list {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 500px;
+  }
+
+  .tasks-list__item {
+    width: 100%;
+    border-bottom: 1px solid grey;
+  }
+
+  .tasks-list__counter {
+    display: flex;
+    margin-left: 10px;
+    height: 50px;
+    align-items: center;
+    font-size: 18px;
+  }
+
+  .tasks-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    height: 60px;
+  }
+
+  .tasks-btns {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .toggle-group {
+    display: flex;
+    margin-right: 20px;
+  }
+
+  .tasks-list__toggle {
+    display: flex;
+    // padding: 5px 10px;
+    height: 40px;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .tasks-list__remove {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .tasks-list__remove:hover {
+    text-decoration-line: underline;
+  }
+
+  .btnRemoveShow {
+    opacity: 1;
+  }
+
+  ::ng-deep .mat-button-toggle-appearance-standard {
+    background-color: transparent;
+    transition: 'background-color .4s';
+  }
+
+  ::ng-deep .mat-button-toggle-label-content {
+    height: 40px;
+  }
+
+  ::ng-deep .mat-button-toggle-checked {
+    background-color: #68f0ad;
+  }
+}
