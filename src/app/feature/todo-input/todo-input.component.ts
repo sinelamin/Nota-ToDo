@@ -17,6 +17,8 @@ export class TodoInputComponent implements OnInit {
 
   constructor(public taskService: TaskService) { }
 
+  taskList$ = this.taskService.tasks$;
+
   ngOnInit(): void {
   }
 
