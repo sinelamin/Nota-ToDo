@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,9 @@ export class TaskService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   private hasCompletedTasksSubject = new BehaviorSubject<boolean>(false);
 
-  tasks$ = this.tasksSubject.asObservable();
+  tasks$ = this.tasksSubject.pipe(
+    map(items => items.map(item => ({...item})))
+  );
   hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
 
   // hasCompletedTasks: boolean = false;

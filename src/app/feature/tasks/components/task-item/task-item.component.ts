@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import {
   FormControl,
@@ -7,11 +7,13 @@ import {
 
 import { Task } from 'src/app/core/task';
 import { TaskService } from 'src/app/core//task.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.scss']
+  styleUrls: ['./task-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskItemComponent implements OnInit {
 
@@ -21,7 +23,9 @@ export class TaskItemComponent implements OnInit {
   isTaskEdit: boolean = false;
   inputChangeTaskName: FormGroup = new FormGroup({});
 
-  constructor(private taskService: TaskService) { }
+  constructor(
+    private taskService: TaskService,
+  ) { }
 
   ngOnInit(): void {
     if (!this.task) {
@@ -66,7 +70,6 @@ export class TaskItemComponent implements OnInit {
 
   changeStatusTask(task: Task | null) {
     if (!task) { return console.error('Task data is undefined or null') }
-
     this.taskService.changeStatusTask(task);
   }
 }

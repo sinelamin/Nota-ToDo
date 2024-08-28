@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { map, combineLatest, BehaviorSubject } from 'rxjs';
 
 import { TaskService } from 'src/app/core/task.service';
@@ -8,6 +8,7 @@ import { Task } from 'src/app/core/task';
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class TasksListComponent implements OnInit {
     map(items => this.tasksCounter(items))
   );
 
-  filteredTasks$ = combineLatest([this.status$, this.taskService.tasks$]).pipe(
+  filteredTasks$ = combineLatest([this.status$, this.taskList$]).pipe(
     map(([status, tasks]) => {
       this.taskStatus = status;
       return this.filterTasks(status, tasks)
