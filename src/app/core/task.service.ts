@@ -73,7 +73,7 @@ export class TaskService {
         item.completed = false;
       });
     } else {
-            currentTasks.forEach(item => {
+      currentTasks.forEach(item => {
         item.completed = true;
       });
     }

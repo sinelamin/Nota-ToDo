@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import {
   FormControl,
@@ -34,17 +34,17 @@ export class TaskItemComponent implements OnInit {
   }
 
   deleteTask(task: Task | null) {
-    if (!task) {return console.error('Task data is undefined or null')}
+    if (!task) { return console.error('Task data is undefined or null') }
 
     this.taskService.deleteTask(task);
   }
-  
+
   editTask() {
     this.isTaskEdit = !this.isTaskEdit;
 
     if (this.isTaskEdit) {
       setTimeout(() => {
-        if (!this.inputElement) {return console.error('inputElement not found')};
+        if (!this.inputElement) { return console.error('inputElement not found') };
 
         this.inputElement.nativeElement.focus();
       }, 0);
@@ -52,7 +52,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   changeNameTask(task: Task | null) {
-    if (!task) {return console.error('Task data is undefined or null')}
+    if (!task) { return console.error('Task data is undefined or null') }
 
     const newTaskName = this.inputChangeTaskName.get('newTaskName')!.value!;
 
@@ -65,7 +65,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   changeStatusTask(task: Task | null) {
-    if (!task) {return console.error('Task data is undefined or null')}
+    if (!task) { return console.error('Task data is undefined or null') }
 
     this.taskService.changeStatusTask(task);
   }

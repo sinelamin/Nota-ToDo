@@ -18,9 +18,9 @@ export class TasksListComponent implements OnInit {
   taskList$ = this.taskService.tasks$;
   status$ = this.taskStatusSubject.asObservable();
   hasCompletedTasks$ = this.taskService.hasCompletedTasks$;
-  
+
   taskStatus: string = '';
-  
+
   taskCounter$ = this.taskService.tasks$.pipe(
     map(items => this.tasksCounter(items))
   );
@@ -49,15 +49,14 @@ export class TasksListComponent implements OnInit {
   }
 
   filterTasks(condition: string, tasks: Task[]): Task[] {
-    if (condition === 'active') {
-      return tasks.filter(item => !item.completed);
+    switch (condition) {
+      case 'active':
+        return tasks.filter(item => !item.completed);
+      case 'completed':
+        return tasks.filter(item => item.completed);
+      default:
+        return tasks;
     }
-
-    if (condition === 'completed') {
-      return tasks.filter(item => item.completed);
-    }
-
-    return tasks;
   }
 
   deleteAllComplitedTasks(): void {
