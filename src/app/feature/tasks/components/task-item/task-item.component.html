@@ -12,8 +12,8 @@
   </form>
 </div>
 <ng-template #taskItem>
-  <div class="task-item"  [ngClass]="{complete: task?.complited}" (dblclick)="editTask()">
-    <mat-checkbox class="task-item__checkbox" [checked]="task?.complited" (change)="changeStatusTask(task)"></mat-checkbox>
+  <div class="task-item"  [ngClass]="{complete: task?.completed}" (dblclick)="editTask()">
+    <mat-checkbox class="task-item__checkbox" [checked]="task?.completed" (change)="changeStatusTask(task)"></mat-checkbox>
     <p class="task-item__name">{{ task?.taskname }}</p>
     <button mat-icon-button class="task-item__btn" (click)="deleteTask(task)">
       <mat-icon>close</mat-icon>
