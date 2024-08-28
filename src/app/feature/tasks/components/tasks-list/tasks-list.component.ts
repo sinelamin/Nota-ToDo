@@ -40,7 +40,7 @@ export class TasksListComponent implements OnInit {
   }
 
   tasksCounter(tasks: Task[]): string {
-    const notCompleteTasks = tasks.filter(item => !item.complited);
+    const notCompleteTasks = tasks.filter(item => !item.completed);
     const notCompleteTasksLength = notCompleteTasks.length;
 
     if (notCompleteTasksLength <= 1) { return `${notCompleteTasksLength} task left` }
@@ -50,11 +50,11 @@ export class TasksListComponent implements OnInit {
 
   filterTasks(condition: string, tasks: Task[]): Task[] {
     if (condition === 'active') {
-      return tasks.filter(item => !item.complited);
+      return tasks.filter(item => !item.completed);
     }
 
     if (condition === 'completed') {
-      return tasks.filter(item => item.complited);
+      return tasks.filter(item => item.completed);
     }
 
     return tasks;

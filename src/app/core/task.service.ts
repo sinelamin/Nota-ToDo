@@ -45,7 +45,7 @@ export class TaskService {
 
   deleteAllComplitedTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
-    const updateTasks = currentTasks.filter(item => !item.complited);
+    const updateTasks = currentTasks.filter(item => !item.completed);
 
     this.tasksSubject.next(updateTasks);
     this.checkingUnfinishedTasks();
@@ -56,7 +56,7 @@ export class TaskService {
 
     currentTasks.forEach(item => {
       if (item.id === task.id) {
-        item.complited = !item.complited;
+        item.completed = !item.completed;
       }
     });
 
@@ -68,13 +68,13 @@ export class TaskService {
   changeStatusAllTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
 
-    if (currentTasks.every(item => item.complited === true)) {
+    if (currentTasks.every(item => item.completed === true)) {
       currentTasks.forEach(item => {
-        item.complited = false;
+        item.completed = false;
       });
     } else {
             currentTasks.forEach(item => {
-        item.complited = true;
+        item.completed = true;
       });
     }
 
@@ -98,7 +98,7 @@ export class TaskService {
   checkingUnfinishedTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
 
-    if (currentTasks.every(item => !item.complited)) {
+    if (currentTasks.every(item => !item.completed)) {
       this.hasCompletedTasksSubject.next(false);
     } else {
       this.hasCompletedTasksSubject.next(true);
