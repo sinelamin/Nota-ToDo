@@ -13,7 +13,7 @@ export class TaskService {
   private hasCompletedTasksSubject = new BehaviorSubject<boolean>(false);
 
   tasks$ = this.tasksSubject.pipe(
-    map(items => items.map(item => ({...item})))
+    map(items => items.map(item => ({ ...item })))
   );
   hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
 
@@ -53,19 +53,6 @@ export class TaskService {
     this.checkingUnfinishedTasks();
   }
 
-  changeStatusTask(task: Task): void {
-    const currentTasks = this.tasksSubject.getValue();
-
-    currentTasks.forEach(item => {
-      if (item.id === task.id) {
-        item.completed = !item.completed;
-      }
-    });
-
-    this.tasksSubject.next(currentTasks);
-
-    this.checkingUnfinishedTasks();
-  }
 
   changeStatusAllTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
@@ -85,12 +72,19 @@ export class TaskService {
     this.checkingUnfinishedTasks();
   }
 
-  changeNameTask(task: Task, newTaskName: string): void {
+
+  changeTask(task: Task, newTaskName?: string): void {
     const currentTasks = this.tasksSubject.getValue();
 
     currentTasks.forEach(item => {
       if (item.id === task.id) {
-        item.taskname = newTaskName;
+        if (newTaskName) {
+          item.taskname = newTaskName;
+        }
+
+        if (!newTaskName) {
+          item.completed = !item.completed;
+        }
       }
     });
 

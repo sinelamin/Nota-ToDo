@@ -61,7 +61,7 @@ export class TaskItemComponent implements OnInit {
     const newTaskName = this.inputChangeTaskName.get('newTaskName')!.value!;
 
     if (newTaskName) {
-      this.taskService.changeNameTask(task, newTaskName);
+      this.taskService.changeTask(task, newTaskName);
       this.editTask();
     } else {
       this.taskService.deleteTask(task);
@@ -70,6 +70,6 @@ export class TaskItemComponent implements OnInit {
 
   changeStatusTask(task: Task | null) {
     if (!task) { return console.error('Task data is undefined or null') }
-    this.taskService.changeStatusTask(task);
+    this.taskService.changeTask(task);
   }
 }
