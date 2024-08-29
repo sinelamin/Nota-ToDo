@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,9 @@ export class TaskService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   private hasCompletedTasksSubject = new BehaviorSubject<boolean>(false);
 
-  tasks$ = this.tasksSubject.asObservable();
+  tasks$ = this.tasksSubject.pipe(
+    map(items => items.map(item => ({ ...item })))
+  );
   hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
 
   // hasCompletedTasks: boolean = false;
@@ -45,36 +47,23 @@ export class TaskService {
 
   deleteAllComplitedTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
-    const updateTasks = currentTasks.filter(item => !item.complited);
+    const updateTasks = currentTasks.filter(item => !item.completed);
 
     this.tasksSubject.next(updateTasks);
     this.checkingUnfinishedTasks();
   }
 
-  changeStatusTask(task: Task): void {
-    const currentTasks = this.tasksSubject.getValue();
-
-    currentTasks.forEach(item => {
-      if (item.id === task.id) {
-        item.complited = !item.complited;
-      }
-    });
-
-    this.tasksSubject.next(currentTasks);
-
-    this.checkingUnfinishedTasks();
-  }
 
   changeStatusAllTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
 
-    if (currentTasks.every(item => item.complited === true)) {
+    if (currentTasks.every(item => item.completed === true)) {
       currentTasks.forEach(item => {
-        item.complited = false;
+        item.completed = false;
       });
     } else {
-            currentTasks.forEach(item => {
-        item.complited = true;
+      currentTasks.forEach(item => {
+        item.completed = true;
       });
     }
 
@@ -83,12 +72,19 @@ export class TaskService {
     this.checkingUnfinishedTasks();
   }
 
-  changeNameTask(task: Task, newTaskName: string): void {
+
+  changeTask(task: Task, newTaskName?: string): void {
     const currentTasks = this.tasksSubject.getValue();
 
     currentTasks.forEach(item => {
       if (item.id === task.id) {
-        item.taskname = newTaskName;
+        if (newTaskName) {
+          item.taskname = newTaskName;
+        }
+
+        if (!newTaskName) {
+          item.completed = !item.completed;
+        }
       }
     });
 
@@ -98,7 +94,7 @@ export class TaskService {
   checkingUnfinishedTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
 
-    if (currentTasks.every(item => !item.complited)) {
+    if (currentTasks.every(item => !item.completed)) {
       this.hasCompletedTasksSubject.next(false);
     } else {
       this.hasCompletedTasksSubject.next(true);

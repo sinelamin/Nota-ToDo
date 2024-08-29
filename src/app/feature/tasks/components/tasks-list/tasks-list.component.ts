@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { map, combineLatest, BehaviorSubject } from 'rxjs';
 
 import { TaskService } from 'src/app/core/task.service';
@@ -8,6 +8,7 @@ import { Task } from 'src/app/core/task';
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
 
@@ -18,14 +19,14 @@ export class TasksListComponent implements OnInit {
   taskList$ = this.taskService.tasks$;
   status$ = this.taskStatusSubject.asObservable();
   hasCompletedTasks$ = this.taskService.hasCompletedTasks$;
-  
+
   taskStatus: string = '';
-  
+
   taskCounter$ = this.taskService.tasks$.pipe(
     map(items => this.tasksCounter(items))
   );
 
-  filteredTasks$ = combineLatest([this.status$, this.taskService.tasks$]).pipe(
+  filteredTasks$ = combineLatest([this.status$, this.taskList$]).pipe(
     map(([status, tasks]) => {
       this.taskStatus = status;
       return this.filterTasks(status, tasks)
@@ -40,7 +41,7 @@ export class TasksListComponent implements OnInit {
   }
 
   tasksCounter(tasks: Task[]): string {
-    const notCompleteTasks = tasks.filter(item => !item.complited);
+    const notCompleteTasks = tasks.filter(item => !item.completed);
     const notCompleteTasksLength = notCompleteTasks.length;
 
     if (notCompleteTasksLength <= 1) { return `${notCompleteTasksLength} task left` }
@@ -49,15 +50,14 @@ export class TasksListComponent implements OnInit {
   }
 
   filterTasks(condition: string, tasks: Task[]): Task[] {
-    if (condition === 'active') {
-      return tasks.filter(item => !item.complited);
+    switch (condition) {
+      case 'active':
+        return tasks.filter(item => !item.completed);
+      case 'completed':
+        return tasks.filter(item => item.completed);
+      default:
+        return tasks;
     }
-
-    if (condition === 'completed') {
-      return tasks.filter(item => item.complited);
-    }
-
-    return tasks;
   }
 
   deleteAllComplitedTasks(): void {

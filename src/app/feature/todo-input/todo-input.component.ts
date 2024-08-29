@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 
 import { TaskService } from 'src/app/core/task.service';
 import { Task } from 'src/app/core/task';
@@ -11,11 +11,14 @@ import {
 @Component({
   selector: 'app-todo-input',
   templateUrl: './todo-input.component.html',
-  styleUrls: ['./todo-input.component.scss']
+  styleUrls: ['./todo-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoInputComponent implements OnInit {
 
-  constructor(public taskService: TaskService) { }
+  constructor(
+    public taskService: TaskService,
+  ) { }
 
   taskList$ = this.taskService.tasks$;
 
@@ -31,7 +34,7 @@ export class TodoInputComponent implements OnInit {
 
     if (taskName) {
       const id = Date.now();
-      const newTask: Task = { id: id, taskname: taskName, complited: false };
+      const newTask: Task = { id: id, taskname: taskName, completed: false };
 
       this.taskService.addTask(newTask);
 
