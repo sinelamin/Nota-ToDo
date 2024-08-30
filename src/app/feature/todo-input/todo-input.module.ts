@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AngularMaterialModule } from 'src/app/shared/angular-material.module';
+import { AngularMaterialModule } from 'projects/task/src/public-api';
 
 import { TodoInputComponent } from './todo-input.component';
 
