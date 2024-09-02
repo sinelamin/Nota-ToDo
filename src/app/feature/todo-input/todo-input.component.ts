@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 
-import { TaskService } from 'projects/task/src/public-api';
-import { Task } from 'projects/task/src/public-api';
+import { TaskService } from 'task';
+import { Task } from 'task';
 
 import {
   FormControl,

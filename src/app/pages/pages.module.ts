@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MainComponent } from './main/main.component';
 import { TodoInputModule } from '../feature/todo-input/todo-input.module';
-import { TasksModule } from 'projects/task/src/public-api';
+import { TasksModule } from 'task';
 
 @NgModule({
   declarations: [
