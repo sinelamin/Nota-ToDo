@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { map, combineLatest, BehaviorSubject } from 'rxjs';
 
-import { TaskService } from 'src/app/core/task.service';
-import { Task } from 'src/app/core/task';
+import { TaskService } from '../../task.service';
+import { Task } from '../../task';
 
 @Component({
   selector: 'app-tasks-list',

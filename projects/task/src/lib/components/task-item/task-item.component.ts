@@ -1,13 +1,12 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import {
   FormControl,
   FormGroup,
 } from '@angular/forms';
 
-import { Task } from 'src/app/core/task';
-import { TaskService } from 'src/app/core//task.service';
-import { map } from 'rxjs';
+import { TaskService } from '../../task.service';
+import { Task } from '../../task';
 
 @Component({
   selector: 'app-task-item',
