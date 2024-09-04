@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { PagesModule } from './pages/pages.module';
+import { PagesModule } from './components/pages.module';
+// import { TodoComponent } from '../../projects/task/src/lib/components/todo/todo.component';
 
 @NgModule({
   declarations: [

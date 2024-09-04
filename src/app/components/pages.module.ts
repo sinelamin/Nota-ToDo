@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MainComponent } from './main/main.component';
-import { TodoInputModule } from '../feature/todo-input/todo-input.module';
+import { MainComponent } from '../components/main/main.component';
 import { TasksModule } from 'task';
 
 @NgModule({
@@ -11,7 +10,6 @@ import { TasksModule } from 'task';
   ],
   imports: [
     CommonModule,
-    TodoInputModule,
     TasksModule,
   ],
   exports: [

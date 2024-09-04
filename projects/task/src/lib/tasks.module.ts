@@ -6,11 +6,13 @@ import { AngularMaterialModule } from './shared/angular-material.module';
 
 import { TasksListComponent } from './components/tasks-list/tasks-list.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
+import { TodoInputComponent } from './components/todo-input/todo-input.component';
 
 @NgModule({
   declarations: [
     TasksListComponent,
     TaskItemComponent,
+    TodoInputComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { TaskItemComponent } from './components/task-item/task-item.component';
   ],
   exports: [
     TasksListComponent,
+    TodoInputComponent,
   ]
 })
 export class TasksModule { }
