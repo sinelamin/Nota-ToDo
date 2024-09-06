@@ -14,15 +14,10 @@ export class TaskService {
 
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   private hasCompletedTasksSubject = new BehaviorSubject<boolean>(false);
-  private localStorageSubject = new BehaviorSubject<string>(localStorage.getItem('tasks') || '');
 
   tasks$ = this.tasksSubject.pipe(
     map(items => items.map(item => ({ ...item })))
   );
-
-  localStorage$ = this.localStorageSubject.pipe(
-    map(value => JSON.parse(value))
-  )
 
   hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
 
@@ -39,8 +34,8 @@ export class TaskService {
   //   console.log(this.tasksSubject.getValue());
   // }
 
-  addTask2(task: Task): Observable<any> {
-    return this.http.post<any>(this.testUrl, JSON.stringify(task));
+  addTask2(task: Task): Observable<Task> {
+    return this.http.post<Task>(this.testUrl, JSON.stringify(task));
   }
 
   updateTasks() {
