@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { TodoInputComponent } from 'projects/task/src/public-api';
 
 @Component({
   selector: 'app-main',
@@ -13,5 +12,4 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

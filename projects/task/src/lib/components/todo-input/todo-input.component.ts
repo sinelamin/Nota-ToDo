@@ -36,7 +36,7 @@ export class TodoInputComponent implements OnInit {
       const id = Date.now();
       const newTask: Task = { id: id, taskname: taskName, completed: false };
 
-      this.taskService.addTask(newTask);
+      this.taskService.addTask2(newTask).subscribe();
 
       this.taskInput.reset();
     }
