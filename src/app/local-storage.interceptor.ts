@@ -17,16 +17,14 @@ export class LocalStorageInterceptor implements HttpInterceptor, OnInit {
   ngOnInit(): void { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(typeof request.body === 'string');
-
-    if (request.method === 'GET') {
+    if (request.method === 'GET' && request.url.includes('/tasks')) {
       console.log("GET");
 
       console.log(localStorage.getItem('tasks'));
     };
 
 
-    if (request.method === 'POST') {
+    if (request.method === 'POST' && request.url.includes('/tasks')) {
 
       if (localStorage.length) {
         const data = JSON.parse(localStorage['tasks']);
