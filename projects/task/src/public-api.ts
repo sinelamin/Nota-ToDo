@@ -4,6 +4,7 @@
 
 export * from './lib/components/task-item/task-item.component';
 export * from './lib/components/tasks-list/tasks-list.component';
+export * from './lib/components/todo-input/todo-input.component';
 export * from './lib/tasks.module';
 export * from './lib/task.service';
 export * from './lib/task';
