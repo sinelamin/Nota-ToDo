@@ -5,14 +5,14 @@
             class="task-input"
             #inputElement
             formControlName="newTaskName"
-            (blur)="editTask()"
+            (blur)="toggleTaskEdit()"
             (keyup.enter)="changeNameTask(task)"
       >
     </div>
   </form>
 </div>
 <ng-template #taskItem>
-  <div class="task-item"  [ngClass]="{complete: task?.completed}" (dblclick)="editTask()">
+  <div class="task-item"  [ngClass]="{complete: task?.completed}" (dblclick)="toggleTaskEdit()">
     <mat-checkbox class="task-item__checkbox" [checked]="task?.completed" (change)="changeStatusTask(task)"></mat-checkbox>
     <p class="task-item__name">{{ task?.taskname }}</p>
     <button mat-icon-button class="task-item__btn" (click)="deleteTask(task)">

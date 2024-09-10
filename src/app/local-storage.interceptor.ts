@@ -12,35 +12,34 @@ import { TaskService } from 'task';
 @Injectable()
 export class LocalStorageInterceptor implements HttpInterceptor, OnInit {
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.method === 'GET' && request.url.includes('/tasks')) {
-      console.log("GET");
+    const isTargetUrlForTasks = request.url.includes('/tasks');
 
-      console.log(localStorage.getItem('tasks'));
-    };
+    if (isTargetUrlForTasks) {
+      switch (request.method) {
+        case 'GET':
+          console.log(localStorage.getItem('tasks'));
+          break;
 
+        case 'POST':
+          const data = localStorage.length ? JSON.parse(localStorage['tasks']) : [];
+          const newTask = JSON.parse(`${request.body}`);
 
-    if (request.method === 'POST' && request.url.includes('/tasks')) {
+          data.push(newTask);
+          localStorage.setItem('tasks', JSON.stringify(data));
 
-      if (localStorage.length) {
-        const data = JSON.parse(localStorage['tasks']);
-        const newTask = request.body;
-        data.push(JSON.parse(`${newTask}`));
+          this.taskService.updateTasks();
+          break;
 
-        localStorage.setItem('tasks', JSON.stringify(data));
+        default:
+          console.log(`Unhandled request with a method: ${request.method}`);
       }
-
-      if (!localStorage.length) {
-        localStorage.setItem('tasks', `[${[request.body]}]`);
-      }
-
-      this.taskService.updateTasks();
     }
 
-    return of();
+    return of(JSON.parse(`${request.body}`).id);
   }
 }
