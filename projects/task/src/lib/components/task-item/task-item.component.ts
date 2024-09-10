@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 import {
   FormControl,
@@ -22,14 +29,14 @@ export class TaskItemComponent implements OnInit {
   isTaskEdit: boolean = false;
   inputChangeTaskName: FormGroup = new FormGroup({});
 
+  errorMessage: string = 'Task data is undefined or null';
+
   constructor(
     private taskService: TaskService,
   ) { }
 
   ngOnInit(): void {
-    if (!this.task) {
-      return console.error('Task data is undefined or null');
-    }
+    if (!this.task) { return console.error(this.errorMessage) }
 
     this.inputChangeTaskName = new FormGroup({
       newTaskName: new FormControl(this.task.taskname),
@@ -37,12 +44,12 @@ export class TaskItemComponent implements OnInit {
   }
 
   deleteTask(task: Task | null) {
-    if (!task) { return console.error('Task data is undefined or null') }
+    if (!task) { return console.error(this.errorMessage) }
 
     this.taskService.deleteTask(task);
   }
 
-  editTask() {
+  toggleTaskEdit() {
     this.isTaskEdit = !this.isTaskEdit;
 
     if (this.isTaskEdit) {
@@ -55,20 +62,20 @@ export class TaskItemComponent implements OnInit {
   }
 
   changeNameTask(task: Task | null) {
-    if (!task) { return console.error('Task data is undefined or null') }
+    if (!task) { return console.error(this.errorMessage) }
 
-    const newTaskName = this.inputChangeTaskName.get('newTaskName')!.value!;
+    const newTaskName = this.inputChangeTaskName.get('newTaskName')?.value;
 
     if (newTaskName) {
       this.taskService.changeTask(task, newTaskName);
-      this.editTask();
+      this.toggleTaskEdit();
     } else {
       this.taskService.deleteTask(task);
     }
   }
 
   changeStatusTask(task: Task | null) {
-    if (!task) { return console.error('Task data is undefined or null') }
+    if (!task) { return console.error(this.errorMessage) }
     this.taskService.changeTask(task);
   }
 }

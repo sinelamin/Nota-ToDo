@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
-import { Observable, BehaviorSubject, map, catchError } from 'rxjs';
+import { Observable, BehaviorSubject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,9 +18,7 @@ export class TaskService {
   tasks$ = this.tasksSubject.pipe(
     map(items => items.map(item => ({ ...item })))
   );
-
   hasCompletedTasks$ = this.hasCompletedTasksSubject.asObservable();
-
   testUrl = 'https://url.com/tasks';
 
   getTasks(): Observable<Task[]> {
@@ -43,67 +41,49 @@ export class TaskService {
     this.tasksSubject.next(updateTasks);
   }
 
-  deleteTask(task: Task): void {
+  deleteTask(task?: Task): void {
     const currentTasks = this.tasksSubject.getValue();
-    const updateTasks = currentTasks.filter(item => item.id !== task.id);
 
-    this.tasksSubject.next(updateTasks);
-    console.log(updateTasks);
-  }
+    const updateTasks = currentTasks.filter(item => {
+      if (task) {
+        return item.id !== task.id;
+      }
 
-  deleteAllComplitedTasks(): void {
-    const currentTasks = this.tasksSubject.getValue();
-    const updateTasks = currentTasks.filter(item => !item.completed);
+      return !item.completed;
+    });
 
     this.tasksSubject.next(updateTasks);
     this.checkingUnfinishedTasks();
   }
 
-
-  changeStatusAllTasks(): void {
+  changeTask(task?: Task, newTaskName?: string): void {
     const currentTasks = this.tasksSubject.getValue();
-
-    if (currentTasks.every(item => item.completed === true)) {
-      currentTasks.forEach(item => {
-        item.completed = false;
-      });
-    } else {
-      currentTasks.forEach(item => {
-        item.completed = true;
-      });
-    }
-
-
-    this.tasksSubject.next(currentTasks);
-    this.checkingUnfinishedTasks();
-  }
-
-
-  changeTask(task: Task, newTaskName?: string): void {
-    const currentTasks = this.tasksSubject.getValue();
+    const completedAllTasks = currentTasks.every(item => item.completed === true);
 
     currentTasks.forEach(item => {
-      if (item.id === task.id) {
-        if (newTaskName) {
-          item.taskname = newTaskName;
-        }
+      const isTargetTask = item.id === task?.id;
+
+      if (isTargetTask) {
+        item.taskname = newTaskName ?? item.taskname;
 
         if (!newTaskName) {
           item.completed = !item.completed;
         }
       }
+
+      if (!task) {
+        item.completed = !completedAllTasks;
+      }
     });
 
     this.tasksSubject.next(currentTasks);
+    this.checkingUnfinishedTasks();
   }
 
   checkingUnfinishedTasks(): void {
     const currentTasks = this.tasksSubject.getValue();
+    const hasCompletedTasks = currentTasks.every(item => !item.completed);
 
-    if (currentTasks.every(item => !item.completed)) {
-      this.hasCompletedTasksSubject.next(false);
-    } else {
-      this.hasCompletedTasksSubject.next(true);
-    }
+    this.hasCompletedTasksSubject.next(!hasCompletedTasks);
   }
 }
